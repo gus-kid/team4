@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>속담 고치기</title>
+</head>
+<body>
+    <h1>틀린 속담 고치기</h1>
+    <p>다음 속담의 틀린 부분을 바르게 고친 후 따라 읽어보세요(1~5)</p>
+    <ol id="proverbs"></ol>
+    <a href="./4_page.html"><button>다음 페이지로</button></a>
+
+    <script>
+        const proverbs = [
+            { question: "오는 말이 고와야 가는 말이 곱다.", answer: "가는 말이 고와야 오는 말이 곱다." },
+            { question: "고래는 게 편", answer: "가재는 게 편" },
+            { question: "소똥도 약에 쓰려면 없다.", answer: "개똥도 약에 쓰려면 없다." },
+            { question: "노력 끝에 낙이 온다.", answer: "고생 끝에 낙이 온다." },
+            { question: "소나기에 옷 젖는 줄 모른다.", answer: "가랑비에 옷 젖는 줄 모른다." }
+        ];
+
+        proverbs.sort(() => Math.random() - 0.5);
+
+        proverbs.forEach((item, index) => {
+            document.getElementById('proverbs').innerHTML += `
+                <li>${item.question} ➡ <input type="text" id="input${index}">
+                <button onclick="checkAnswer(${index}, '${item.answer}')">확인</button>
+                <span id="result${index}"></span></li>`;
+        });
+
+        function checkAnswer(index, answer) {
+            const input = document.getElementById(`input${index}`).value.trim();
+            const result = document.getElementById(`result${index}`);
+            alert(input === answer ? '정답입니다.' : '오답입니다.');
+        }
+    </script>
+</body>
+</html>

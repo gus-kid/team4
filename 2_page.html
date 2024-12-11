@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고지혈증과 식사요법</title>
+</head>
+<body>
+    <script>
+        const pageDiv = document.createElement('div');
+        pageDiv.id = 'page_2';
+        pageDiv.style.border = '3px solid green';
+
+        pageDiv.innerHTML = `
+            <h1>고지혈증과 식사요법 기억하기</h1>
+            <p>앞서 기억해 둔 <span style="color: red;">고지혈증과 식사요법</span>에 대한 설명입니다. 
+            <보기>에서 단어를 찾아 빈칸에 알맞은 내용을 적어보세요.</p>
+        `;
+
+        pageDiv.innerHTML += `
+            <table id="table1" border="1">
+                <thead style="text-align: center;">
+                    <tr><th colspan="3">보기</th></tr>
+                </thead>
+                <tbody style="text-align: center;">
+                    <tr>
+                        <td>불포화지방</td>
+                        <td>포화지방산</td>
+                        <td>규칙적</td>
+                    </tr>
+                    <tr>
+                        <td>채소, 과일, 잡곡</td>
+                        <td>정상체중</td>
+                        <td>적절한 열량</td>
+                    </tr>
+                </tbody>
+            </table>
+        `;
+
+        pageDiv.innerHTML += `
+            <h2>고지혈증 식사요법</h2>
+            <ul>
+                <li><b>1.</b> <input type="text" id="input1" placeholder="여기에 입력">을 유지하고, 
+                <input type="text" id="input2" placeholder="여기에 입력">을 섭취합니다. 
+                <button onclick="checkAnswer('input1', ['정상체중', '적절한 열량'])">확인</button></li>
+
+                <li><b>2.</b> 식사는 <input type="text" id="input3" placeholder="여기에 입력">으로 하고, 
+                식품은 골고루 먹습니다. 
+                <button onclick="checkAnswer('input3', ['규칙적'])">확인</button></li>
+                
+                <li><b>3.</b> <input type="text" id="input4" placeholder="여기에 입력">을 섭취합니다. 
+                <button onclick="checkAnswer('input4', ['불포화지방'])">확인</button></li>
+
+                <li><b>4.</b> <input type="text" id="input5" placeholder="여기에 입력">, 
+                콜레스테롤 고함량 식품 섭취를 줄입니다. 
+                <button onclick="checkAnswer('input5', ['포화지방산'])">확인</button></li>
+
+                <li><b>5.</b> <input type="text" id="input6" placeholder="여기에 입력">을 충분히 섭취합니다. 
+                <button onclick="checkAnswer('input6', ['채소, 과일, 잡곡'])">확인</button></li>
+            </ul>
+        `;
+
+        pageDiv.innerHTML += `
+            <h2>콜레스테롤 줄이기 위한 식품 선택요령</h2>
+            <table id="table2" border="1">
+                <thead>
+                    <tr><th>적합한 식품</th><th>피해야 할 식품</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>˚ 달걀 흰자<br>˚ 저지방 요거트, 저지방 치즈, 두유<br>˚ 식물성 기름<br>&nbsp&nbsp(들기름, 참기름, 콩기름 등)<br>
+                            ˚ 견과류(호두, 아몬드, 잣 등)<br>˚ 다양한 곡물(잡곡밥, 콩 등)<br>˚ 등푸른 생성(고등어, 청어 등)<br>˚ 다양한 과일과 채소</td>
+                        <td>˚ 달걀 노른자<br>˚ 요거트, 치즈, 아이스크림<br>˚ 버터, 마가린, 돼지기름<br>˚ 케이크, 핫도그, 라면, 볶음밥<br>
+                            ˚ 닭껍질, 육류의 내장 기관, 햄,<br>소시지, 기름 많은 부위의 쇠고기<br>튀김</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p><span style="color: red;">고지혈증과 식사요법</span>을 기억해 주세요.</p>
+        `;
+
+        pageDiv.innerHTML += `
+            <a href="./3_page.html"><button>다음 페이지로</button></a>
+        `;
+
+        document.body.appendChild(pageDiv);
+
+        function checkAnswer(inputId, correctAnswers) {
+            const input = document.getElementById(inputId).value.trim();
+            const isCorrect = correctAnswers.includes(input);
+            
+            alert(isCorrect ? `정답입니다!` : `오답입니다. 다시 시도해보세요.`);
+        }
+    </script>
+</body>
+</html>
