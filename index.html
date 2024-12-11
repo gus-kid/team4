@@ -91,18 +91,18 @@
 
     <script>
         document.getElementById('login-form').addEventListener('submit', function (e) {
-            e.preventDefault(); // 기본 제출 동작을 막음
+            e.preventDefault(); 
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // 기본적인 유효성 검사
+            
             if (username === "" || password === "") {
                 document.getElementById('error-message').textContent = "아이디와 비밀번호를 모두 입력해주세요.";
                 return;
             }
 
-            // 로그인 정보 검증 (여기서는 간단한 예시로 하드코딩된 값 사용)
+            
             if (username === "u1234" && password === "p1234") {
                 alert("로그인 성공!");
                 window.location.href = "page1.html";  // 로그인 후 이동할 페이지
