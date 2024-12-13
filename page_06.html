@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고지혈증과 식사요법 기억하기</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 200px);
+            gap: 20px;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        
+        .grid-item {
+            position: relative;
+            width: 200px;
+            height: 150px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 48px;
+            color: white;
+            display: none;
+        }
+
+        .correct { background-color: rgba(0, 255, 0, 0.5); }
+        .wrong { background-color: rgba(255, 0, 0, 0.5); }
+    </style>
+</head>
+<body>
+    <h1>고지혈증과 식사요법 기억하기</h1>
+    <h2>앞서 기억해 둔 <span style="color: red;">고지혈증과 식사요법</span>을  떠올리며 적합한 식품에 동그라미 하세요</h2>
+
+    <div class="grid-container">
+        <div class="grid-item" data-correct="false"><img src="pizza.jpg" alt="피자"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="true"><img src="apple.jpg" alt="사과"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="false"><img src="butter.jpg" alt="버터"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="false"><img src="custard.jpg" alt="카스타드"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="true"><img src="banana.jpg" alt="바나나"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="true"><img src="sesame-oil.jpg" alt="참기름"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="true"><img src="walnut.jpg" alt="호두"><div class="overlay"></div></div>
+        <div class="grid-item" data-correct="false"><img src="ice-cream.jpg" alt="아이스크림"><div class="overlay"></div></div>
+    </div>
+
+    <script>
+        const gridItems = document.querySelectorAll('.grid-item');
+
+        gridItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const overlay = item.querySelector('.overlay');
+
+                if (item.dataset.correct === 'true') {
+                    overlay.textContent = '✔';
+                    overlay.className = 'overlay correct';
+                    overlay.style.display = 'flex';
+                } else {
+                    overlay.textContent = '✘';
+                    overlay.className = 'overlay wrong';
+                    overlay.style.display = 'flex';
+                    alert('틀린 선택입니다. 다시 시도하세요.');
+                    resetOverlays(item); 
+                }
+
+                if (document.querySelectorAll('.correct').length === document.querySelectorAll('[data-correct="true"]').length) {
+                    alert('정답입니다! 다음 페이지로 이동합니다.');
+                    window.location.href = 'page_07.html';
+                }
+            });
+        });
+
+        function resetOverlays(excludeItem) {
+            gridItems.forEach(item => {
+                if (item !== excludeItem) {
+                    const overlay = item.querySelector('.overlay');
+                    overlay.style.display = 'none';
+                    overlay.textContent = '';
+                    overlay.className = 'overlay';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
