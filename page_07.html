@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일기 작성</title>
+    <style>
+        .highlight {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div class="diary-container">
+        <h1>일기</h1>
+
+        <table>
+            <tr>
+                <td><input type="text" id="year" placeholder="년"></td>
+                <td><input type="text" id="month" placeholder="월"></td>
+                <td><input type="text" id="day" placeholder="일"></td>
+                <td><input type="text" id="weekday" placeholder="요일"></td>
+                <td><input type="text" id="weather" placeholder="날씨"></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th colspan='2' style="text-align: center;">나의 하루</th>
+            </tr>
+            <tr>
+                <td>방문한 장소</td>
+                <td><input type="text" id="visited-place" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>오늘 만난 사람</td>
+                <td><input type="text" id="met-people" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>구입한 물건</td>
+                <td><input type="text" id="purchased-items" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>지출 금액</td>
+                <td><input type="text" id="spent-money" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>오늘의 뉴스</td>
+                <td><input type="text" id="today-news" placeholder="내용을 입력하시오."></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th colspan='2'>시간</th>
+                <th>중요한 일</th>
+            </tr>
+            <tr>
+                <td>오전 5시 ~ 8시</td>
+                <td>일어나서 한 일</td>
+                <td><input type="text" id="morning1" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>오전 8시 ~ 12시</td>
+                <td>아침식사 후에 한 일</td>
+                <td><input type="text" id="morning2" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>오후 12시 ~ 5시</td>
+                <td>오후에 한 일</td>
+                <td><input type="text" id="afternoon" placeholder="내용을 입력하시오."></td>
+            </tr>
+            <tr>
+                <td>오후 5시 ~ 10시</td>
+                <td>저녁식사 후에 한 일</td>
+                <td><input type="text" id="evening" placeholder="내용을 입력하시오."></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th>내일 계획</th>
+                <td><input type="text" id="tomorrow-plan" placeholder="내용을 입력하시오."></td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th>뇌 건강을 위한 생활 습관</th>
+                <td class="warning-box" id="warning-box" onclick="showPrompt()">
+                    <span style="color: red;">지금 흡연하고 계신다면 바로 담배를 끊으세요.</span><p>현재 흡연하는 사람은 2년 후 혈관성 치매에 걸릴 위험이 2배 더 높습니다.</p>
+                    <p>(<span style="font-size: 10px;">모든 칸에 입력을 완료한 후 클릭해 주세요.</span>)</p>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        const inputs = document.querySelectorAll('input');
+        const warningBox = document.getElementById("warning-box");
+
+        inputs.forEach((input, index) => {
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    const nextInput = inputs[index + 1];
+                    if (nextInput) {
+                        nextInput.focus();
+                    }
+                }
+            });
+        });
+
+        function checkInputs() {
+            const allFilled = Array.from(inputs).every(input => input.value.trim() !== "");
+
+            if (allFilled) {
+                warningBox.classList.add("highlight");
+                warningBox.style.cursor = "pointer";
+            } else {
+                warningBox.classList.remove("highlight");
+                warningBox.style.cursor = "not-allowed";
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener('input', checkInputs);
+        });
+
+        function showPrompt() {
+            if (warningBox.style.cursor === "pointer") {
+                alert('작성이 완료되었습니다.');
+            }
+        }
+    </script>
+</body>
+</html>
