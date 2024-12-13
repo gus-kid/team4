@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            height: 100vh;
+        }
+        .container {
+            position: relative;
+            display: inline-block;
+            text-align: center;
+        }
+        .title {
+            background-color: yellow;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .instructions {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .blue-box {
+            border: 2px solid blue;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .ox-group {
+            margin-top: 10px;
+        }
+        .ox-group button {
+            margin: 5px;
+            font-size: 18px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .ox-group button.highlight {
+            background-color: yellow;
+        }
+        .input-group {
+            margin-top: 10px;
+        }
+        .input-group input {
+            margin-right: 10px;
+            padding: 5px;
+            font-size: 16px;
+        }
+        #next-button {
+            display: none; 
+            position: absolute;
+            bottom: -55px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">고지혈증과 식사요법 기억하기</div>
+        <div class="instructions">
+            <span style="color: red;">앞서 기억해 둔 고지혈증과 식사요법</span>을 떠올리며 O, X 문제를 풀어 보세요(1~4).
+        </div>
+        <div class="blue-box">
+            1. 고지혈증은 혈관 속 혈액이 잘 흐르는 현상이다.
+            <div class="ox-group">
+                <button onclick="highlightOX(this, 1, 'X')">O</button>
+                <button onclick="highlightOX(this, 1, 'X')">X</button>
+            </div>
+            2. 고지혈증은 혈액에 콜레스테롤이 필요 이상으로 많이 함유되어 있다.
+            <div class="ox-group">
+                <button onclick="highlightOX(this, 2, 'O')">O</button>
+                <button onclick="highlightOX(this, 2, 'O')">X</button>
+            </div>
+            3. 콜레스테롤이 혈액 내에 과다하게 많아지면 혈관벽에 침착되어 동맥경화를 일으킨다.
+            <div class="ox-group">
+                <button onclick="highlightOX(this, 3, 'O')">O</button>
+                <button onclick="highlightOX(this, 3, 'O')">X</button>
+            </div>
+            4. 총 콜레스테롤의 정상범위는 300mg 이하이다.
+            <div class="ox-group">
+                <button onclick="highlightOX(this, 4, 'X')">O</button>
+                <button onclick="highlightOX(this, 4, 'X')">X</button>
+            </div>
+        </div>
+        <div class="instructions">
+            <span style="color: red;">앞서 기억해 둔 식사요법</span>을 적어보세요(1~5).
+        </div>
+        <div class="input-group">
+            1. 정상 체중을 유지하고, <input type="text" id="q1" placeholder="정답 입력">
+            <button onclick="checkText(1, '적절한 열량을 섭취합니다;적절한 열량을 섭취합니다.')">확인</button>
+        </div>
+        <div class="input-group">
+            2. <input type="text" id="q2" placeholder="정답 입력"> 식품은 골고루 먹습니다.
+            <button onclick="checkText(2, '식사는 규칙적으로 하고')">확인</button>
+        </div>
+        <div class="input-group">
+            3. <input type="text" id="q3" placeholder="정답 입력"> 섭취합니다.
+            <button onclick="checkText(3, '불포화지방')">확인</button>
+        </div>
+        <div class="input-group">
+            4. <input type="text" id="q4" placeholder="정답 입력"> 고함량 식품의 섭취를 줄입니다.
+            <button onclick="checkText(4, '포화지방산 콜레스테롤;콜레스테롤 포화지방산;콜레스테롤,포화지방산;포화지방산,콜레스테롤')">확인</button>
+        </div>
+        <div class="input-group">
+            5. <input type="text" id="q5" placeholder="정답 입력"> 충분히 섭취합니다.
+            <button onclick="checkText(5, '채소 과일 잡곡;채소 잡곡 과일;잡곡 채소 과일;잡곡 과일 채소;과일 채소 잡곡;과일 잡곡 채소;채소,과일,잡곡;채소,잡곡,과일;잡곡,채소,과일;잡곡,과일,채소;과일,잡곡,채소;과일,채소,잡곡')">확인</button>
+        </div>        
+
+        <div class="instructions" id="reminder">
+            <span style="color: red;">고지혈증과 식사요법</span>을 기억해 주세요.
+        </div>
+        <button id="next-button" onclick="goToNextPage()">다음</button>
+    </div>
+    <script>
+        const answeredOX = {};
+        const answeredText = {};
+    
+        function highlightOX(el, qNum, correct) {
+            const siblings = el.parentNode.querySelectorAll('button');
+            siblings.forEach(btn => btn.classList.remove('highlight'));
+            el.classList.add('highlight');
+    
+            if (el.innerHTML.trim() === correct) {
+                if (qNum === 1) {
+                    showMessage("정답입니다! 고지혈증은 혈관 속 혈액이 잘 흐르지 않는 현상입니다.");
+                } else if (qNum === 4) {
+                    showMessage("정답입니다! 총 콜레스테롤의 정상범위는 200mg 이하입니다.");
+                } else {
+                    showMessage("정답입니다!");
+                }
+                answeredOX[qNum] = true;
+            } else {
+                setTimeout(() => el.classList.remove('highlight'), 1500);
+                showMessage("오답입니다!");
+                answeredOX[qNum] = false;
+            }
+            checkAllAnswers();
+        }
+    
+        function checkText(qNum, correct) {
+            const input = document.getElementById(`q${qNum}`);
+            const value = input.value
+                .trim()
+                .replace(/\s*,\s*/g, ",")
+                .toLowerCase(); 
+    
+            const correctAnswers = correct
+                .split(";")
+                .map(ans => ans.trim().toLowerCase());
+    
+            if (correctAnswers.includes(value)) {
+                showMessage("정답입니다!");
+                answeredText[qNum] = true;
+            } else {
+                showMessage("오답입니다!");
+                answeredText[qNum] = false;
+                input.value = "";
+            }
+            checkAllAnswers();
+        }
+    
+        function checkAllAnswers() {
+            const allAnswered =
+                Object.keys(answeredOX).length === 4 &&
+                Object.keys(answeredText).length === 5 &&
+                Object.values(answeredOX).every(answer => answer === true) &&
+                Object.values(answeredText).every(answer => answer === true);
+    
+            if (allAnswered) {
+                document.getElementById("reminder").style.display = "none"; 
+                document.getElementById("next-button").style.display = "block";
+            }
+        }
+    
+        function showMessage(message) {
+            window.alert(message);
+        }
+    
+        function goToNextPage() {
+            alert("모든 문제를 맞췄습니다! 다음 페이지로 이동합니다.");
+            window.location.href = "page_06.html";
+        }
+    </script>        
+</body>
+</html>
